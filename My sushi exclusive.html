@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Sushi Exclusive | Sipariş & Online Ödeme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #0f1115;
+      --bg-card: #181b22;
+      --bg-card-hover: #1f232c;
+      --gold: #c5a059;
+      --gold-hover: #b08d47;
+      --gold-light: rgba(197, 160, 89, 0.12);
+      --gold-border: rgba(197, 160, 89, 0.3);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --success-green: #34d399;
+      --danger-red: #f87171;
+      --warning-orange: #fbbf24;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding-bottom: 90px;
+    }
+
+    h1, h2, h3, .brand-font {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.5px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(15, 17, 21, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    .header-actions { display: flex; align-items: center; gap: 0.75rem; }
+    
+    .admin-btn {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+      padding: 0.5rem 0.95rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .admin-btn:hover { background: var(--gold-light); }
+
+    .header-cart-btn {
+      background: var(--gold);
+      color: #0f1115;
+      border: none;
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .header-cart-btn:hover { background: var(--gold-hover); }
+
+    .cart-badge {
+      background: #0f1115;
+      color: var(--gold);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .restaurant-card {
+      background: var(--bg-card);
+      max-width: 1240px;
+      margin: 1.2rem auto;
+      padding: 1.3rem 1.5rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .rest-info h1 { font-size: 1.45rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .rest-meta { display: flex; gap: 0.8rem; font-size: 0.84rem; color: var(--text-muted); align-items: center; flex-wrap: wrap; }
+    .rating { color: #0f1115; background: var(--gold); padding: 0.15rem 0.45rem; border-radius: 4px; font-weight: 800; font-size: 0.8rem; }
+
+    .sticky-nav {
+      position: sticky;
+      top: 58px;
+      z-index: 90;
+      background: rgba(15, 17, 21, 0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0.65rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .search-input {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: var(--bg-card);
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus { border-color: var(--gold); }
+
+    .cat-scroll { display: flex; gap: 0.5rem; overflow-x: auto; scrollbar-width: none; }
+    .cat-scroll::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      white-space: nowrap;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 0.4rem 0.95rem;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .cat-pill:hover,
+    .cat-pill.active { background: var(--gold-light); color: var(--gold); border-color: var(--gold-border); }
+
+    .container { max-width: 1240px; margin: 1.5rem auto; padding: 0 1rem; }
+    .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.2rem; }
+    .section-header h2 { font-size: 1.3rem; color: var(--gold); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.1rem; }
+
+    .product-card {
+      background: var(--bg-card);
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .product-card:hover {
+      border-color: var(--gold-border);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .product-img-box {
+      width: 100%;
+      height: 175px;
+      background: #111317;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .product-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.92);
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+    .product-card:hover .product-img-box img {
+      transform: scale(1.05);
+      filter: brightness(1);
+    }
+
+    .product-body { padding: 1.1rem; display: flex; flex-direction: column; flex: 1; justify-content: space-between; }
+    .product-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.4rem; }
+    .product-title { font-size: 0.98rem; font-weight: 600; color: #fff; }
+    .product-cat-tag { font-size: 0.65rem; font-weight: 700; color: var(--gold); background: var(--gold-light); padding: 0.15rem 0.45rem; border-radius: 4px; letter-spacing: 0.5px; }
+    .product-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 0.8rem; }
+
+    .stock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      margin-bottom: 0.65rem;
+      padding: 0.15rem 0.45rem;
+      border-radius: 4px;
+    }
+    .stock-badge.in-stock { color: var(--success-green); background: rgba(52, 211, 153, 0.1); }
+    .stock-badge.critical-stock { color: var(--warning-orange); background: rgba(251, 191, 36, 0.1); }
+    .stock-badge.out-stock { color: var(--danger-red); background: rgba(248, 113, 113, 0.1); }
+    .stock-dot { width: 5px; height: 5px; border-radius: 50%; display: inline-block; }
+    .in-stock .stock-dot { background: var(--success-green); }
+    .critical-stock .stock-dot { background: var(--warning-orange); }
+    .out-stock .stock-dot { background: var(--danger-red); }
+
+    .product-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.7rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .price-tag { font-size: 1.05rem; font-weight: 700; color: var(--gold); }
+
+    .qty-control { display: flex; align-items: center; background: #242933; border: 1px solid var(--border-subtle); border-radius: 6px; overflow: hidden; }
+    .qty-btn { background: transparent; border: none; color: #fff; width: 28px; height: 28px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .qty-btn:hover { background: rgba(255,255,255,0.06); }
+    .qty-value { color: var(--gold); font-size: 0.85rem; font-weight: 700; min-width: 22px; text-align: center; }
+
+    .add-btn {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--gold-border);
+      padding: 0.45rem 0.95rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .add-btn:hover { background: var(--gold); color: #0f1115; }
+    .add-btn:disabled { border-color: var(--border-subtle); color: #555; cursor: not-allowed; background: transparent; }
+
+    /* ALT BAR */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(15, 17, 21, 0.98);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 95;
+    }
+    .bar-total { font-size: 0.8rem; color: var(--text-muted); }
+    .bar-total strong { font-size: 1.15rem; color: var(--gold); font-weight: 700; display: block; }
+    .bar-btn {
+      background: var(--gold);
+      color: #0f1115;
+      border: none;
+      padding: 0.65rem 1.35rem;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .bar-btn:hover { background: var(--gold-hover); }
+
+    /* SEPET DRAWER */
+    .drawer-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.7); z-index: 150; display: none; }
+    .drawer-overlay.active { display: block; }
+    .cart-drawer {
+      position: fixed; top: 0; right: -420px; width: 100%; max-width: 400px; height: 100%;
+      background: var(--bg-card); z-index: 160; display: flex; flex-direction: column;
+      border-left: 1px solid var(--border-subtle);
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cart-drawer.active { right: 0; }
+    .drawer-head { background: var(--bg-dark); color: #fff; padding: 1.2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); }
+    .drawer-head h3 { font-size: 1.1rem; color: var(--gold); }
+    .close-drawer { background: transparent; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; }
+    .close-drawer:hover { color: #fff; }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 1rem; }
+    .drawer-foot { padding: 1.2rem; border-top: 1px solid var(--border-subtle); background: var(--bg-dark); }
+    
+    .pay-btn-group { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.8rem; }
+    .pay-btn-online {
+      width: 100%; background: var(--gold); color: #0f1115;
+      border: none; padding: 0.8rem; border-radius: 6px; font-size: 0.92rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s; display: flex; justify-content: center; align-items: center; gap: 0.4rem;
+    }
+    .pay-btn-online:hover { background: var(--gold-hover); }
+    .pay-btn-wa {
+      width: 100%; background: transparent; color: var(--text-muted);
+      border: 1px solid var(--border-subtle); padding: 0.65rem; border-radius: 6px; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .pay-btn-wa:hover { border-color: var(--gold-border); color: #fff; }
+
+    /* ==================== ONLİNE ÖDEME MODAL ==================== */
+    .payment-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); z-index: 210;
+      display: none; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .payment-modal-overlay.active { display: flex; }
+    .payment-modal {
+      background: var(--bg-card); width: 100%; max-width: 480px; border-radius: 12px;
+      border: 1px solid var(--gold-border); box-shadow: 0 15px 50px rgba(0,0,0,0.8);
+      overflow: hidden; animation: popIn 0.25s ease;
+    }
+    @keyframes popIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+    .payment-head {
+      background: var(--bg-dark); padding: 1.1rem 1.4rem; border-bottom: 1px solid var(--border-subtle);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .payment-head h3 { font-size: 1rem; color: var(--gold); }
+    .payment-body { padding: 1.4rem; }
+
+    /* KART GÖRSELİ (PREVIEW) */
+    .card-preview {
+      background: linear-gradient(135deg, #1f232c, #0d0f13);
+      border: 1px solid var(--gold-border); border-radius: 10px;
+      padding: 1.2rem; margin-bottom: 1.2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      position: relative;
+    }
+    .card-chip { width: 36px; height: 26px; background: #c5a059; border-radius: 4px; margin-bottom: 1rem; opacity: 0.85; }
+    .card-number-display { font-family: monospace; font-size: 1.1rem; letter-spacing: 2px; color: #fff; margin-bottom: 0.8rem; }
+    .card-info-row { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; }
+    .card-info-row span { color: #fff; font-weight: 600; display: block; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; }
+    .form-group label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; }
+    .form-input {
+      background: var(--bg-dark); border: 1px solid var(--border-subtle);
+      padding: 0.65rem 0.85rem; border-radius: 6px; color: #fff; font-size: 0.88rem; outline: none;
+    }
+    .form-input:focus { border-color: var(--gold); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+
+    .security-badge {
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      font-size: 0.72rem; color: var(--text-muted); margin-top: 0.8rem;
+    }
+    .submit-pay-btn {
+      width: 100%; background: var(--gold); color: #0f1115; border: none;
+      padding: 0.85rem; border-radius: 6px; font-weight: 700; font-size: 0.95rem; cursor: pointer;
+      margin-top: 0.5rem; transition: background 0.2s;
+    }
+    .submit-pay-btn:hover { background: var(--gold-hover); }
+
+    /* ADMIN MODAL */
+    .admin-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200;
+      display: none; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .admin-modal-overlay.active { display: flex; }
+    .admin-modal {
+      background: var(--bg-card); width: 100%; max-width: 850px; max-height: 90vh;
+      border-radius: 10px; display: flex; flex-direction: column; overflow: hidden;
+      border: 1px solid var(--gold-border);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+    }
+    .admin-header {
+      background: var(--bg-dark); color: #fff; padding: 1rem 1.4rem;
+      display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle);
+    }
+    .admin-header h3 { font-size: 1rem; color: var(--gold); }
+    .admin-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+    
+    .admin-form-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem;
+      background: var(--bg-dark); padding: 1.2rem; border-radius: 8px; margin-bottom: 1.5rem;
+      border: 1px solid var(--border-subtle);
+    }
+    .admin-field { display: flex; flex-direction: column; gap: 0.3rem; }
+    .admin-field label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); }
+    .admin-field input, .admin-field select, .admin-field textarea {
+      padding: 0.55rem; border: 1px solid var(--border-subtle); border-radius: 6px; font-size: 0.85rem; font-family: inherit;
+      background: var(--bg-card); color: #fff;
+    }
+    .admin-field input:focus, .admin-field select:focus, .admin-field textarea:focus { border-color: var(--gold); outline: none; }
+    .admin-field.full { grid-column: 1 / -1; }
+
+    .image-preview-box {
+      width: 100%; height: 90px; border: 1px dashed var(--border-subtle); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg-card);
+    }
+    .image-preview-box img { max-height: 100%; object-fit: contain; }
+
+    .admin-actions-bar {
+      grid-column: 1 / -1; display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem;
+    }
+    .admin-save-btn {
+      background: var(--gold); color: #0f1115; border: none; padding: 0.6rem 1.4rem;
+      border-radius: 6px; font-weight: 700; cursor: pointer;
+    }
+    .admin-save-btn:hover { background: var(--gold-hover); }
+    .admin-cancel-btn {
+      background: transparent; color: var(--text-muted); border: 1px solid var(--border-subtle); padding: 0.6rem 1.2rem;
+      border-radius: 6px; font-weight: 600; cursor: pointer;
+    }
+
+    .admin-table-wrap { overflow-x: auto; }
+    .admin-table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    .admin-table th, .admin-table td { padding: 0.65rem; border-bottom: 1px solid var(--border-subtle); text-align: left; }
+    .admin-table th { background: var(--bg-dark); color: var(--text-muted); font-weight: 600; }
+    .admin-img-thumb { width: 44px; height: 44px; border-radius: 4px; object-fit: cover; background: #111; }
+    .action-btn-sm {
+      border: none; padding: 0.3rem 0.6rem; border-radius: 4px; cursor: pointer; font-size: 0.75rem; font-weight: 700;
+    }
+    .edit-btn { background: var(--gold-light); color: var(--gold); margin-right: 0.3rem; border: 1px solid var(--gold-border); }
+    .del-btn { background: rgba(248, 113, 113, 0.15); color: var(--danger-red); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-title">MY SUSHI EXCLUSIVE</div>
+    <div class="header-actions">
+      <button class="admin-btn" onclick="openAdminPanel()">⚙️ Yönetici Paneli</button>
+      <button class="header-cart-btn" onclick="toggleCart()">
+        Sepetim <span class="cart-badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="restaurant-card">
+    <div class="rest-info">
+      <h1>My Sushi Exclusive</h1>
+      <div class="rest-meta">
+        <span class="rating">★ 4.6</span>
+        <span>(370+ Değerlendirme)</span>
+        <span>• Meram / Konya</span>
+        <span>• 256-Bit SSL Güvenli Online Ödeme Aktif</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sticky-nav">
+    <div class="nav-inner">
+      <input type="text" id="searchInput" class="search-input" placeholder="Menüde ara... (roll, gyoza, noodle, ramen, mochi)" oninput="renderMenu()">
+      <div class="cat-scroll">
+        <button class="cat-pill active" onclick="setCategory('all', this)">Tümü</button>
+        <button class="cat-pill" onclick="setCategory('maki', this)">🥢 Maki Rolls</button>
+        <button class="cat-pill" onclick="setCategory('roll', this)">🍣 Sushi Rolls</button>
+        <button class="cat-pill" onclick="setCategory('set', this)">🍱 Set Menüler</button>
+        <button class="cat-pill" onclick="setCategory('nigiri', this)">🍙 Nigiris</button>
+        <button class="cat-pill" onclick="setCategory('noodle', this)">🍜 Ramen & Noodle</button>
+        <button class="cat-pill" onclick="setCategory('onigiri', this)">🍙 Onigiris</button>
+        <button class="cat-pill" onclick="setCategory('baslangic', this)">🥟 Başlangıç & Gyoza</button>
+        <button class="cat-pill" onclick="setCategory('tatli', this)">🍡 Tatlılar</button>
+        <button class="cat-pill" onclick="setCategory('icecek', this)">🥤 İçecekler</button>
+        <button class="cat-pill" onclick="setCategory('oven', this)">🍕 My Ovens</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <div class="section-header">
+      <h2 id="catHeaderTitle">Tüm Ürünler</h2>
+      <span id="productCounter" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">0 Ürün</span>
+    </div>
+    <div class="grid" id="productGrid"></div>
+  </main>
+
+  <div class="bottom-bar">
+    <div class="bar-total">
+      <span>Toplam:</span>
+      <strong id="barTotalPrice">₺0,00</strong>
+    </div>
+    <button class="bar-btn" onclick="toggleCart()">
+      Sepeti Görüntüle (<span id="barItemCount">0</span>) ➔
+    </button>
+  </div>
+
+  <!-- SEPET ÇEKMECESİ -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="drawer-head">
+      <h3>Sipariş Sepetim</h3>
+      <button class="close-drawer" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="drawer-body" id="drawerItems"></div>
+    <div class="drawer-foot">
+      <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.15rem; margin-bottom:0.5rem; color: #fff;">
+        <span>Ödenecek Tutar:</span>
+        <span id="grandTotal" style="color: var(--gold);">₺0,00</span>
+      </div>
+      
+      <!-- ÖDEME SEÇENEKLERİ -->
+      <div class="pay-btn-group">
+        <button class="pay-btn-online" onclick="openPaymentModal()">
+          💳 Kredi / Banka Kartı ile Online Öde
+        </button>
+        <button class="pay-btn-wa" onclick="checkoutViaWhatsApp()">
+          📲 WhatsApp Siparişi Olarak Gönder
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONLINE ÖDEME EKRANI (CHECKOUT MODAL) -->
+  <div class="payment-modal-overlay" id="paymentModalOverlay">
+    <div class="payment-modal">
+      <div class="payment-head">
+        <h3>Güvenli Online Ödeme (3D Secure)</h3>
+        <button class="close-drawer" onclick="closePaymentModal()">✕</button>
+      </div>
+      <div class="payment-body">
+        
+        <!-- DİNAMİK KART ÖNİZLEMESİ -->
+        <div class="card-preview">
+          <div class="card-chip"></div>
+          <div class="card-number-display" id="cardPreviewNumber">•••• •••• •••• ••••</div>
+          <div class="card-info-row">
+            <div>
+              KART SAHİBİ
+              <span id="cardPreviewHolder">AD SOYAD</span>
+            </div>
+            <div>
+              SKT
+              <span id="cardPreviewExpiry">AA/YY</span>
+            </div>
+          </div>
+        </div>
+
+        <form id="paymentForm" onsubmit="processOnlinePayment(event)">
+          <div class="form-group">
+            <label>Kart Üzerindeki İsim</label>
+            <input type="text" id="cardHolder" class="form-input" placeholder="Ad Soyad" required oninput="updateCardPreview()">
+          </div>
+
+          <div class="form-group">
+            <label>Kart Numarası</label>
+            <input type="text" id="cardNumber" class="form-input" placeholder="0000 0000 0000 0000" maxlength="19" required oninput="formatCardNumber(this)">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Son Kullanma Tarihi</label>
+              <input type="text" id="cardExpiry" class="form-input" placeholder="AA/YY" maxlength="5" required oninput="formatExpiry(this)">
+            </div>
+            <div class="form-group">
+              <label>CVV / Güvenlik Kodu</label>
+              <input type="password" id="cardCvv" class="form-input" placeholder="•••" maxlength="3" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Teslimat Adresi</label>
+            <input type="text" id="deliveryAddress" class="form-input" placeholder="Açık adresinizi yazınız..." required>
+          </div>
+
+          <button type="submit" class="submit-pay-btn" id="submitPayBtn">
+            Ödemeyi Tamamla (<span id="payModalAmount">₺0,00</span>)
+          </button>
+        </form>
+
+        <div class="security-badge">
+          🔒 256-Bit SSL Şifreleme • 3D Secure Doğrulama
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ADMIN PANELİ -->
+  <div class="admin-modal-overlay" id="adminModalOverlay">
+    <div class="admin-modal">
+      <div class="admin-header">
+        <h3>Restoran Yönetim Paneli</h3>
+        <button class="close-drawer" onclick="closeAdminPanel()">✕</button>
+      </div>
+      <div class="admin-body">
+        
+        <h4 id="formHeader" style="margin-bottom: 0.8rem; color: var(--gold); font-size: 0.95rem;">+ Yeni Ürün Ekle</h4>
+        <input type="hidden" id="adminProductId">
+
+        <div class="admin-form-grid">
+          <div class="admin-field">
+            <label>Ürün Adı *</label>
+            <input type="text" id="adminName" placeholder="Örn: Dragon Roll">
+          </div>
+          <div class="admin-field">
+            <label>Kategori *</label>
+            <select id="adminCat">
+              <option value="maki">Maki Rolls</option>
+              <option value="roll">Sushi Rolls</option>
+              <option value="set">Set Menüler</option>
+              <option value="nigiri">Nigiris</option>
+              <option value="noodle">Ramen & Noodle</option>
+              <option value="onigiri">Onigiris</option>
+              <option value="baslangic">Başlangıç & Gyoza</option>
+              <option value="tatli">Tatlılar</option>
+              <option value="icecek">İçecekler</option>
+              <option value="oven">My Ovens</option>
+            </select>
+          </div>
+          <div class="admin-field">
+            <label>Fiyat (₺) *</label>
+            <input type="number" id="adminPrice" placeholder="Örn: 450">
+          </div>
+          <div class="admin-field">
+            <label>Stok Adedi *</label>
+            <input type="number" id="adminStock" placeholder="Örn: 20">
+          </div>
+          
+          <div class="admin-field">
+            <label>Fotoğraf Linki (URL)</label>
+            <input type="text" id="adminImgUrl" placeholder="https://...jpg" oninput="previewImg(this.value)">
+          </div>
+          <div class="admin-field">
+            <label>Veya Fotoğraf Yükle</label>
+            <input type="file" id="adminImgFile" accept="image/*" onchange="handleFileUpload(event)">
+          </div>
+          <div class="admin-field">
+            <label>Önizleme</label>
+            <div class="image-preview-box" id="adminImgPreview">
+              <span style="font-size:0.75rem; color:var(--text-muted);">Görsel Yok</span>
+            </div>
+          </div>
+
+          <div class="admin-field full">
+            <label>İçerik / Açıklama *</label>
+            <textarea id="adminDesc" rows="2" placeholder="Ürün malzemeleri ve eşlikçileri..."></textarea>
+          </div>
+
+          <div class="admin-actions-bar">
+            <button class="admin-cancel-btn" onclick="resetAdminForm()">Temizle / İptal</button>
+            <button class="admin-save-btn" onclick="saveProduct()">Ürünü Kaydet</button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 0.6rem;">
+          <h4 style="color: #fff; font-size: 0.95rem;">Mevcut Menü (<span id="adminTotalCount">0</span> Ürün)</h4>
+          <input type="text" id="adminSearch" placeholder="Listede ara..." style="padding:0.4rem 0.7rem; border:1px solid var(--border-subtle); border-radius:6px; font-size:0.8rem; background: var(--bg-dark); color:#fff;" oninput="renderAdminTable()">
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Görsel</th>
+                <th>Ürün Adı</th>
+                <th>Kategori</th>
+                <th>Fiyat</th>
+                <th>Stok</th>
+                <th>İşlem</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const defaultProducts = [
+      // MAKI ROLLS
+      { id: 1, name: "Crab Maki", cat: "maki", price: 649, stock: 12, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Nori yengeç, mayonez. Soya sosu, wasabi, zencefil turşusu ile." },
+      { id: 2, name: "Salmon Maki", cat: "maki", price: 649, stock: 8, img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80", desc: "Nori (yosun), somon, soya sosu, wasabi, zencefil turşusu." },
+      { id: 3, name: "Prawn Maki", cat: "maki", price: 669, stock: 6, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=500&auto=format&fit=crop&q=80", desc: "Nori, karides, salatalık, mayonez, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 4, name: "Avokado Maki", cat: "maki", price: 629, stock: 14, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=500&auto=format&fit=crop&q=80", desc: "Nori, avokado, soya sosu, wasabi, zencefil turşusu." },
+      { id: 5, name: "Tobiko Maki", cat: "maki", price: 629, stock: 3, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=500&auto=format&fit=crop&q=80", desc: "Nori, tobiko, soya sosu, wasabi, zencefil turşusu." },
+      { id: 6, name: "Cucumber Maki", cat: "maki", price: 619, stock: 15, img: "https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=500&auto=format&fit=crop&q=80", desc: "Nori, salatalık, soya sosu, wasabi, zencefil turşusu." },
+      { id: 7, name: "Salvo Maki", cat: "maki", price: 649, stock: 7, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=500&auto=format&fit=crop&q=80", desc: "Nori, somon, avokado, soya sosu, wasabi, zencefil turşusu ile." },
+      { id: 8, name: "Prawn Tobiko Maki", cat: "maki", price: 689, stock: 4, img: "https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=500&auto=format&fit=crop&q=80", desc: "Nori, karides, tobiko, salatalık, mayonez, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 9, name: "Philadelphia Maki", cat: "maki", price: 659, stock: 11, img: "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&auto=format&fit=crop&q=80", desc: "Nori, somon, labne, soya sosu, wasabi ve zencefil turşusu." },
+      { id: 10, name: "Salmon Tobiko Maki", cat: "maki", price: 769, stock: 2, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Nori balık yumurtası, somon, avokado, labne, soya sosu, wasabi, zencefil turşusu." },
+      { id: 11, name: "Dream Maki", cat: "maki", price: 629, stock: 9, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=500&auto=format&fit=crop&q=80", desc: "Nori, Havuç, Avokado, Soya Sosu, Wasabi ve Zencefil Turşusu ile Servis Edilir." },
+
+      // SUSHI ROLLS
+      { id: 12, name: "Tenderness Roll", cat: "roll", price: 709, stock: 10, img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80", desc: "Dereotu (dışı), nori, labne, salatalık, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 13, name: "Alaska Roll", cat: "roll", price: 869, stock: 7, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=500&auto=format&fit=crop&q=80", desc: "Somon balığı, susam, labne, salatalık, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 14, name: "Avokado Salmon Roll", cat: "roll", price: 879, stock: 8, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=500&auto=format&fit=crop&q=80", desc: "Dışı avokado, nori, somon, labne, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 15, name: "Avokado Prawn Roll", cat: "roll", price: 879, stock: 5, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=500&auto=format&fit=crop&q=80", desc: "Avokado (dışı), nori, karides, salatalık, soya sosu, wasabi, zencefil turşusu." },
+      { id: 16, name: "Avokado Crab Roll", cat: "roll", price: 879, stock: 6, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Avokado (Dışı), nori, yengeç, salatalık, soya sosu, wasabi, zencefil turşusu ile." },
+      { id: 17, name: "Midory Roll", cat: "roll", price: 899, stock: 9, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=500&auto=format&fit=crop&q=80", desc: "Uçan balık yumurtası, nori yengeç, somon, salatalık, mayonez, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 18, name: "Philadelphia Roll", cat: "roll", price: 899, stock: 14, img: "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&auto=format&fit=crop&q=80", desc: "Dışı somon, nori, labne, salatalık, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 19, name: "California Sesame Crab", cat: "roll", price: 909, stock: 11, img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80", desc: "Dışı susam, nori, yengeç, mayonez, salatalık, avokado, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 20, name: "California Salmon Roll", cat: "roll", price: 909, stock: 7, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=500&auto=format&fit=crop&q=80", desc: "Uçan balık yumurtası (dışı), nori, somon, avokado, salatalık, mayonez. Soya sosu, wasabi, zencefil turşusu ile." },
+      { id: 21, name: "California Prawn Roll", cat: "roll", price: 909, stock: 4, img: "https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=500&auto=format&fit=crop&q=80", desc: "Dışı uçan balık yumurtası, nori, karides, avokado, salatalık, mayonez, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 22, name: "California Crab Tobiko Roll", cat: "roll", price: 909, stock: 3, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Uçan balık yumurtası (dışı), nori, yengeç, avokado, salatalık, mayonez, soya sosu, wasabi ve zencefil turşusu." },
+      { id: 23, name: "Philadelphia Tobiko Roll", cat: "roll", price: 909, stock: 8, img: "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&auto=format&fit=crop&q=80", desc: "Uçan balık yumurtası (dışı), somon (dışı), nori, somon, labne, salatalık, soya sosu, wasabi, zencefil turşusu." },
+      { id: 24, name: "Philadephia Prawn Roll", cat: "roll", price: 909, stock: 5, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=500&auto=format&fit=crop&q=80", desc: "Dışı somon kaplı, üstü tobiko (Uçan balık yumurtası), nori, karides, labne, avokado. Soya sosu, wasabi ve zencefil turşusu ile." },
+      { id: 25, name: "Cheese Salmon Roll", cat: "roll", price: 909, stock: 6, img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80", desc: "Cheddar peyniri, nori, somon, labne, salatalık, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 26, name: "Okayama Roll", cat: "roll", price: 909, stock: 8, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=500&auto=format&fit=crop&q=80", desc: "Pürmüzlenmiş somon, nori labne, avokado, sriracha sos, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 27, name: "Sakura Roll", cat: "roll", price: 949, stock: 5, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=500&auto=format&fit=crop&q=80", desc: "Labne, uçan balık yumurtası, nori, yengeç, avokado, salatalık, soya sosu, wasabi, zencefil turşusu." },
+      { id: 28, name: "Salmon Dream Roll", cat: "roll", price: 949, stock: 6, img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80", desc: "Somon, somon, nori, somon, labne, avokado, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 29, name: "Tekka Roll", cat: "roll", price: 949, stock: 9, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Dışı uçan balık yumurtası, somon, mayonez, nori, labne, salatalık, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 30, name: "Crab Tempura Roll", cat: "roll", price: 959, stock: 4, img: "https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=500&auto=format&fit=crop&q=80", desc: "Panko (dışı), nori, yengeç, labne, salatalık, soya sosu. Wasabi, zencefil turşusu ile." },
+      { id: 31, name: "Salmon Tempura Roll", cat: "roll", price: 959, stock: 8, img: "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&auto=format&fit=crop&q=80", desc: "Panko (dışı), nori, somon, labne, salatalık, soya sosu, wasabi, zencefil turşusu." },
+      { id: 32, name: "Roll Godzilla Roll", cat: "roll", price: 979, stock: 4, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=500&auto=format&fit=crop&q=80", desc: "Uçan balık yumurtası (Dışı), nori, kızarmış karides, salatalık, avokado, soya sosu, wasabi, zencefil turşusu." },
+      { id: 33, name: "Hot Fuji Roll", cat: "roll", price: 979, stock: 5, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=500&auto=format&fit=crop&q=80", desc: "Panko (dışı), nori, somon, karides, labne, salatalık, soya sosu, wasabi ve zencefil turşusu." },
+
+      // SET MENÜLER
+      { id: 34, name: "Nigiri Set (4 Pcs.)", cat: "set", price: 769, stock: 10, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=500&auto=format&fit=crop&q=80", desc: "Avokado Nigiri + Sake Avokado + Sake + Kani." },
+      { id: 35, name: "Set Menü 1 (30 Pcs.)", cat: "set", price: 2839, stock: 4, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Maki Crab (6 pcs.) + California Sesame Crab (8 pcs.) + Midory (8 pcs) + Philadelphia Tobiko (8 pcs.) + Soya Sosu + Wasabi + Zencefil Turşusu." },
+      { id: 36, name: "Set Menü 2 (30 Pcs.)", cat: "set", price: 2839, stock: 5, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=500&auto=format&fit=crop&q=80", desc: "Philadelphia (8 Parça) + Midory (8 Parça) + Tekka (8 Parça) + Maki Cucumber (6 Parça) (Soya sosu, wasabi, zencefil turşusu ile)." },
+      { id: 37, name: "Set Menü 3 (32 Parça)", cat: "set", price: 3109, stock: 3, img: "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&auto=format&fit=crop&q=80", desc: "Philadelphia (8 Parça) + Midory (8 Parça) + California Crab Tobiko (8 Parça) + Alaska ( 8 Parça) + Soya Sosu + Wasabi + Zencefil Turşusu." },
+      { id: 38, name: "Set Menü 4 (32 Pcs.)", cat: "set", price: 3149, stock: 4, img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80", desc: "Philadelphia Roll (8 pcs.) + California Crab Tobiko Roll (8 pcs.) + California Salmon Roll (8 pcs.) + California Prawn Roll (8 pcs.) + Soya Sosu + Wasabi + Zencefil Turşusu." },
+      { id: 39, name: "Set Menü 5 (40 Pcs.)", cat: "set", price: 4199, stock: 2, img: "https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=500&auto=format&fit=crop&q=80", desc: "Philadelphia (8 parça) + Tenderness (8 parça) + Maki Crab (6 parça) + Maki Salmon (6 parça) + Maki Tobiko (6 parça) + Maki Philadelphia (6 parça) (Soya sosu, wasabi, zencefil turşusu ile)." },
+      { id: 40, name: "Set Menü 6 (48 Pcs.)", cat: "set", price: 4459, stock: 3, img: "https://images.unsplash.com/photo-1617196035154-1e7e6e28b0db?w=500&auto=format&fit=crop&q=80", desc: "Midory Roll (8 pcs.) + California Crab Tobiko Roll (8 pcs.) + California Prawn Roll (8 pcs.) + Salmon Maki (6 pcs.) + Crab Maki (6 pcs.) + Avocado Maki (6 pcs.) + Philadelphia Maki (6 pcs.) + Soslar." },
+      { id: 41, name: "Set Menü 8 (58 Pcs.)", cat: "set", price: 5439, stock: 2, img: "https://images.unsplash.com/photo-1553621042-f6e147245754?w=500&auto=format&fit=crop&q=80", desc: "Okayama Roll (8 pcs.) + Philadelphia Roll (8 pcs.) + California Prawn Roll (8 pcs.) + Midory Roll (8 pcs.) + Avocado Crab (8 pcs.) + Salmon Maki (6 pcs.) + Crab Maki (6 pcs.) + Cucumber Maki (8 pcs.) + Soslar." },
+      { id: 42, name: "Set Menü 7 (56 Pcs)", cat: "set", price: 5899, stock: 1, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Tenderness (8 parça) + Alaska (8 parça) + Midory (8 parça) + Philadelphia (8 parça) + Philadephia Tobiko (8 parça) + California Crab Tobiko (8 parça) + California Salmon (8 parça) (Soslar ile)." },
+
+      // NIGIRIS
+      { id: 43, name: "Ikura Sake Nigiri", cat: "nigiri", price: 309, stock: 6, img: "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&auto=format&fit=crop&q=80", desc: "Yosun somon, soya sosu, wasabi, zencefil turşusu." },
+      { id: 44, name: "Avokado Nigiri", cat: "nigiri", price: 309, stock: 10, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=500&auto=format&fit=crop&q=80", desc: "Avokado. Soya sosu, wasabi, zencefil turşusu ile." },
+      { id: 45, name: "Ebi Nigiri", cat: "nigiri", price: 309, stock: 7, img: "https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=500&auto=format&fit=crop&q=80", desc: "Karides, soya sosu, wasabi, zencefil turşusu ile." },
+      { id: 46, name: "Sake Nigiri", cat: "nigiri", price: 309, stock: 12, img: "https://images.unsplash.com/photo-1534482421-64566f976cfa?w=500&auto=format&fit=crop&q=80", desc: "Somon, soya sosu, wasabi, zencefil turşusu." },
+      { id: 47, name: "Sake Avokado Nigiri", cat: "nigiri", price: 309, stock: 8, img: "https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&auto=format&fit=crop&q=80", desc: "Somon, avokado, soya sosu, wasabi, zencefil turşusu." },
+      { id: 48, name: "Kani Nigiri", cat: "nigiri", price: 309, stock: 9, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Yengeç, soya sosu, wasabi, zencefil turşusu." },
+
+      // RAMEN & NOODLES
+      { id: 49, name: "Beef Ramen", cat: "noodle", price: 799, stock: 5, img: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&auto=format&fit=crop&q=80", desc: "Japon eriştesi, dana eti, mantar, havuç, edamame, mısır, sarımsak, zencefil, soya sosu, susam yağı, frenk soğanı, yumurta." },
+      { id: 50, name: "Karidesli Noodle", cat: "noodle", price: 739, stock: 8, img: "https://images.unsplash.com/photo-1585032226651-759b368d7246?w=500&auto=format&fit=crop&q=80", desc: "Noodle, karides, mevsim sebzeleri, zencefil, sarımsak, soya sosu, susam yağı." },
+      { id: 51, name: "Tavuklu Noodle", cat: "noodle", price: 679, stock: 14, img: "https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500&auto=format&fit=crop&q=80", desc: "Noodle, Tavuk, Mevsim Sebzeleri, Zencefil, Sarımsak, Soya Sosu ve Susam Yağı." },
+      { id: 52, name: "Sebzeli Noodle", cat: "noodle", price: 659, stock: 16, img: "https://images.unsplash.com/photo-1552611052-33e04de081de?w=500&auto=format&fit=crop&q=80", desc: "Noodle, mevsim sebzeleri, zencefil, sarımsak, soya sosu, susam yağı." },
+
+      // BAŞLANGIÇLAR & GYOZA
+      { id: 53, name: "Karidesli Gyoza (5 Adet)", cat: "baslangic", price: 679, stock: 7, img: "https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=500&auto=format&fit=crop&q=80", desc: "Buğday unu, su, karides, sarımsak, soya sos, yumurta, çin marulu, yeşil soğan, zencefil. Gyoza sos ile 5 adet servis edilir." },
+      { id: 54, name: "Tavuklu Gyoza (5 Adet)", cat: "baslangic", price: 649, stock: 10, img: "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?w=500&auto=format&fit=crop&q=80", desc: "Buğday unu, Su, Tuz, Sarımsak, Zencefil, Çin marulu, Tavuk eti, Yeşil soğan, Yumurta. Gyoza Sos ile 5 adet servis edilir." },
+      { id: 55, name: "Spicy Edamame", cat: "baslangic", price: 369, stock: 15, img: "https://images.unsplash.com/photo-1564834744159-ff0ea41ba4b9?w=500&auto=format&fit=crop&q=80", desc: "Himalaya tuzu, acı sos, soya fasulyesi." },
+      { id: 56, name: "Edamame", cat: "baslangic", price: 349, stock: 18, img: "https://images.unsplash.com/photo-1550950158-d0d960dff51b?w=500&auto=format&fit=crop&q=80", desc: "Soya fasulyesi, tuz." },
+      { id: 57, name: "Tempura Corn Fritters", cat: "baslangic", price: 349, stock: 11, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=500&auto=format&fit=crop&q=80", desc: "Çıtır altın sarısı mısır tempura lezzeti. Tek kişilik servis edilir." },
+      { id: 58, name: "Spring Roll", cat: "baslangic", price: 349, stock: 13, img: "https://images.unsplash.com/photo-1544025162-d76694265947?w=500&auto=format&fit=crop&q=80", desc: "Pirinç yufkalarına sarılı mevsim sebzeleri. Tatlı ekşi sos ile." },
+      { id: 59, name: "Karides Cipsi", cat: "baslangic", price: 309, stock: 20, img: "https://images.unsplash.com/photo-1599488615731-7e5c2823ff28?w=500&auto=format&fit=crop&q=80", desc: "Geleneksel çıtır karides atıştırmalığı." },
+
+      // ONIGIRIS
+      { id: 60, name: "Onigiri Crab", cat: "onigiri", price: 399, stock: 6, img: "https://images.unsplash.com/photo-1563245372-f21724e3856d?w=500&auto=format&fit=crop&q=80", desc: "Pirinç, yengeç, mayonez." },
+      { id: 61, name: "Onigiri Salmon", cat: "onigiri", price: 399, stock: 7, img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80", desc: "Pirinç, somon, Krem peynir." },
+      { id: 62, name: "Onigiri Vegetarian", cat: "onigiri", price: 379, stock: 8, img: "https://images.unsplash.com/photo-1611143669185-af224c5e3252?w=500&auto=format&fit=crop&q=80", desc: "Pirinç, salatalık, krem peynir." },
+
+      // TATLILAR
+      { id: 63, name: "Şans Kurabiyesi (4 Adet)", cat: "tatli", price: 179, stock: 25, img: "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&auto=format&fit=crop&q=80", desc: "4 adet olarak servis edilir. İçinde şans mesajları barındırır." },
+      { id: 64, name: "Mochi With Vanilla", cat: "tatli", price: 299, stock: 9, img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&auto=format&fit=crop&q=80", desc: "Yumuşak pirinç hamurunda vanilya lezzeti." },
+      { id: 65, name: "Mochi With Chocolate", cat: "tatli", price: 299, stock: 6, img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&auto=format&fit=crop&q=80", desc: "Beyaz çikolata dolgulu geleneksel Japon mochi tatlısı." },
+      { id: 66, name: "Mochi With Strawberry", cat: "tatli", price: 299, stock: 4, img: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=500&auto=format&fit=crop&q=80", desc: "Ferahlatıcı çilek aromalı geleneksel mochi." },
+
+      // İÇECEKLER
+      { id: 67, name: "Kombucha 2200 Sade", cat: "icecek", price: 229, stock: 14, img: "https://images.unsplash.com/photo-1556881286-fc6915169721?w=500&auto=format&fit=crop&q=80", desc: "Cam şişe fermante doğal probiyotik çay." },
+      { id: 68, name: "Kombucha Lavanta 2200", cat: "icecek", price: 229, stock: 8, img: "https://images.unsplash.com/photo-1556881286-fc6915169721?w=500&auto=format&fit=crop&q=80", desc: "Cam şişe aromatik lavantalı fermante çay." },
+      { id: 69, name: "Kombucha 2200 Yasemin", cat: "icecek", price: 229, stock: 7, img: "https://images.unsplash.com/photo-1556881286-fc6915169721?w=500&auto=format&fit=crop&q=80", desc: "Cam şişe yasemin aromalı fermante çay." },
+      { id: 70, name: "Pepsi (33 Cl.)", cat: "icecek", price: 149, stock: 35, img: "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=500&auto=format&fit=crop&q=80", desc: "Kutu soğuk meşrubat." },
+      { id: 71, name: "7UP (33 Cl.)", cat: "icecek", price: 149, stock: 28, img: "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?w=500&auto=format&fit=crop&q=80", desc: "Kutu limonlu gazoz." },
+      { id: 72, name: "Lipton Ice Tea (33 Cl.)", cat: "icecek", price: 149, stock: 24, img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500&auto=format&fit=crop&q=80", desc: "Kutu soğuk çay." },
+      { id: 73, name: "Su (33 Cl.)", cat: "icecek", price: 59, stock: 50, img: "https://images.unsplash.com/photo-1548839140-29a749e1bc4e?w=500&auto=format&fit=crop&q=80", desc: "Cam şişe doğal kaynak suyu." },
+
+      // MY OVENS
+      { id: 74, name: "Pizza Margherita - Neapolitan Style", cat: "oven", price: 799, stock: 5, img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=80", desc: "Domates sosu, taze mozarella peyniri, Pesto sosu." }
+    ];
+
+    let products = defaultProducts;
+    try {
+      const stored = localStorage.getItem('my_sushi_products_pay_v1');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          products = parsed;
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    let cart = {};
+    let activeCategory = 'all';
+    let currentTempImg = '';
+
+    function saveToStorage() {
+      try {
+        localStorage.setItem('my_sushi_products_pay_v1', JSON.stringify(products));
+      } catch (err) {
+        alert("Görsel boyutu nedeniyle kaydedilemedi, link kullanmayı deneyin.");
+      }
+    }
+
+    function renderMenu() {
+      const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+      let visible = 0;
+
+      products.forEach(p => {
+        const matchesCategory = (activeCategory === 'all') || (p.cat === activeCategory);
+        const matchesSearch = p.name.toLowerCase().includes(search) || (p.desc && p.desc.toLowerCase().includes(search));
+
+        if (matchesCategory && matchesSearch) {
+          visible++;
+          const qty = cart[p.id] || 0;
+          const availableStock = Math.max(0, p.stock - qty);
+
+          let stockClass = "in-stock";
+          let stockLabel = `Stokta: ${availableStock} adet`;
+
+          if (availableStock <= 0) {
+            stockClass = "out-stock";
+            stockLabel = "Tükendi";
+          } else if (availableStock <= 3) {
+            stockClass = "critical-stock";
+            stockLabel = `Son ${availableStock} ürün!`;
+          }
+
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          card.innerHTML = `
+            <div class="product-img-box">
+              <img src="${p.img || 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80'}" alt="${p.name}" loading="lazy">
+            </div>
+            <div class="product-body">
+              <div>
+                <div class="product-head">
+                  <h3 class="product-title">${p.name}</h3>
+                  <span class="product-cat-tag">${p.cat.toUpperCase()}</span>
+                </div>
+                <p class="product-desc">${p.desc || ''}</p>
+                <div>
+                  <span class="stock-badge ${stockClass}">
+                    <span class="stock-dot"></span> ${stockLabel}
+                  </span>
+                </div>
+              </div>
+              <div class="product-bottom">
+                <span class="price-tag">₺${Number(p.price).toFixed(2).replace('.', ',')}</span>
+                <div>
+                  ${
+                    qty > 0 
+                    ? `
+                      <div class="qty-control">
+                        <button class="qty-btn" onclick="updateQty(${p.id}, -1)">−</button>
+                        <span class="qty-value">${qty}</span>
+                        <button class="qty-btn" ${availableStock <= 0 ? 'disabled' : ''} onclick="updateQty(${p.id}, 1)">+</button>
+                      </div>
+                    `
+                    : `
+                      <button class="add-btn" ${availableStock <= 0 ? 'disabled' : ''} onclick="updateQty(${p.id}, 1)">
+                        ${availableStock <= 0 ? 'Tükendi' : '+ Ekle'}
+                      </button>
+                    `
+                  }
+                </div>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        }
+      });
+
+      document.getElementById('productCounter').innerText = `${visible} Ürün listelendi`;
+    }
+
+    function setCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const titles = {
+        'all': 'Tüm Ürünler',
+        'maki': 'Maki Rolls',
+        'roll': 'Sushi Rolls',
+        'set': 'Set Menüler',
+        'nigiri': 'Nigiris',
+        'noodle': 'Ramen & Noodles',
+        'onigiri': 'Onigiris',
+        'baslangic': 'Başlangıç & Gyoza',
+        'tatli': 'Tatlılar & Mochi',
+        'icecek': 'İçecekler',
+        'oven': 'My Ovens'
+      };
+      document.getElementById('catHeaderTitle').innerText = titles[cat] || 'Ürünler';
+      renderMenu();
+    }
+
+    function updateQty(id, delta) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+      const currentQty = cart[id] || 0;
+      const nextQty = currentQty + delta;
+
+      if (delta > 0 && currentQty >= product.stock) {
+        alert("Stok adedine ulaşıldı!");
+        return;
+      }
+
+      if (nextQty <= 0) delete cart[id];
+      else cart[id] = nextQty;
+
+      updateCartUI();
+      renderMenu();
+    }
+
+    function updateCartUI() {
+      let totalCount = 0, totalPrice = 0;
+      const drawerItems = document.getElementById('drawerItems');
+      drawerItems.innerHTML = '';
+      const cartIds = Object.keys(cart);
+
+      if (cartIds.length === 0) {
+        drawerItems.innerHTML = `<div style="text-align:center; padding:3rem 1rem; color:var(--text-muted);">Sepetiniz boş.</div>`;
+      } else {
+        cartIds.forEach(id => {
+          const p = products.find(prod => prod.id == id);
+          if(!p) return;
+          const qty = cart[id];
+          const itemTotal = p.price * qty;
+          totalCount += qty;
+          totalPrice += itemTotal;
+
+          const itemRow = document.createElement('div');
+          itemRow.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:0.8rem 0; border-bottom:1px solid var(--border-subtle);";
+          itemRow.innerHTML = `
+            <div style="display:flex; align-items:center; gap:0.6rem;">
+              <img src="${p.img || 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=100&auto=format&fit=crop&q=80'}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
+              <div>
+                <div style="font-weight:600; font-size:0.88rem; color:#fff;">${p.name}</div>
+                <div style="color:var(--gold); font-weight:700; font-size:0.85rem;">₺${Number(p.price).toFixed(2).replace('.', ',')}</div>
+              </div>
+            </div>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="updateQty(${p.id}, -1)">−</button>
+              <span class="qty-value">${qty}</span>
+              <button class="qty-btn" ${qty >= p.stock ? 'disabled' : ''} onclick="updateQty(${p.id}, 1)">+</button>
+            </div>
+          `;
+          drawerItems.appendChild(itemRow);
+        });
+      }
+
+      const formatted = '₺' + totalPrice.toFixed(2).replace('.', ',');
+      document.getElementById('cartCount').innerText = totalCount;
+      document.getElementById('barItemCount').innerText = totalCount;
+      document.getElementById('barTotalPrice').innerText = formatted;
+      document.getElementById('grandTotal').innerText = formatted;
+      document.getElementById('payModalAmount').innerText = formatted;
+    }
+
+    function toggleCart() {
+      document.getElementById('cartDrawer').classList.toggle('active');
+      document.getElementById('drawerOverlay').classList.toggle('active');
+    }
+
+    // ==================== ONLINE ÖDEME MOTORU ====================
+    function openPaymentModal() {
+      const ids = Object.keys(cart);
+      if (ids.length === 0) {
+        alert("Sepetinizde ürün bulunmuyor!");
+        return;
+      }
+      toggleCart(); // sepeti kapat
+      document.getElementById('paymentModalOverlay').classList.add('active');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModalOverlay').classList.remove('active');
+    }
+
+    function formatCardNumber(input) {
+      let val = input.value.replace(/\D/g, '');
+      let formatted = val.match(/.{1,4}/g)?.join(' ') || '';
+      input.value = formatted;
+      document.getElementById('cardPreviewNumber').innerText = formatted || '•••• •••• •••• ••••';
+    }
+
+    function formatExpiry(input) {
+      let val = input.value.replace(/\D/g, '');
+      if (val.length >= 2) {
+        val = val.substring(0,2) + '/' + val.substring(2,4);
+      }
+      input.value = val;
+      document.getElementById('cardPreviewExpiry').innerText = val || 'AA/YY';
+    }
+
+    function updateCardPreview() {
+      const name = document.getElementById('cardHolder').value.toUpperCase();
+      document.getElementById('cardPreviewHolder').innerText = name || 'AD SOYAD';
+    }
+
+    function processOnlinePayment(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitPayBtn');
+      btn.innerText = "İşlem Güvenli Olarak Yapılıyor...";
+      btn.disabled = true;
+
+      // 3D Secure / Sanal Pos Simülasyonu
+      setTimeout(() => {
+        let total = 0;
+        let summary = "";
+        
+        // Stok düşürme
+        Object.keys(cart).forEach(id => {
+          const p = products.find(prod => prod.id == id);
+          if (p) {
+            p.stock = Math.max(0, p.stock - cart[id]);
+            total += p.price * cart[id];
+            summary += `• ${cart[id]}x ${p.name}\n`;
+          }
+        });
+
+        saveToStorage();
+        
+        const addr = document.getElementById('deliveryAddress').value;
+        const holder = document.getElementById('cardHolder').value;
+
+        alert(`✅ ÖDEME BAŞARILI (3D Secure Onaylandı)\n\nSn. ${holder},\n₺${total.toFixed(2)} tutarındaki siparişiniz hazırlanıyor.\n\nTeslimat Adresi:\n${addr}`);
+
+        // Sepeti Sıfırla
+        cart = {};
+        updateCartUI();
+        renderMenu();
+        closePaymentModal();
+
+        // Formu resetle
+        document.getElementById('paymentForm').reset();
+        document.getElementById('cardPreviewNumber').innerText = '•••• •••• •••• ••••';
+        document.getElementById('cardPreviewHolder').innerText = 'AD SOYAD';
+        document.getElementById('cardPreviewExpiry').innerText = 'AA/YY';
+        btn.innerText = "Ödemeyi Tamamla";
+        btn.disabled = false;
+      }, 1500);
+    }
+
+    function checkoutViaWhatsApp() {
+      const ids = Object.keys(cart);
+      if (ids.length === 0) { alert("Sepetiniz boş!"); return; }
+      let text = "*My Sushi Exclusive Siparişi*\n\n";
+      let total = 0;
+      ids.forEach(id => {
+        const p = products.find(prod => prod.id == id);
+        if(!p) return;
+        const qty = cart[id];
+        total += p.price * qty;
+        text += `• ${qty}x ${p.name} (₺${(p.price * qty).toFixed(2)})\n`;
+      });
+      text += `\n*Toplam:* ₺${total.toFixed(2)}`;
+      window.open(`https://wa.me/905322807874?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // ==================== ADMIN PANELİ FONKSİYONLARI ====================
+    function openAdminPanel() {
+      const pass = prompt("Yönetici Şifresi: (Varsayılan: 1234)");
+      if (pass === "1234") {
+        document.getElementById('adminModalOverlay').classList.add('active');
+        renderAdminTable();
+      } else if (pass !== null) {
+        alert("Hatalı şifre!");
+      }
+    }
+
+    function closeAdminPanel() {
+      document.getElementById('adminModalOverlay').classList.remove('active');
+      resetAdminForm();
+    }
+
+    function previewImg(url) {
+      currentTempImg = url;
+      const box = document.getElementById('adminImgPreview');
+      if (url) box.innerHTML = `<img src="${url}">`;
+      else box.innerHTML = `<span style="font-size:0.75rem; color:var(--text-muted);">Görsel Yok</span>`;
+    }
+
+    function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxDim = 400;
+          let w = img.width;
+          let h = img.height;
+
+          if (w > h) {
+            if (w > maxDim) { h *= maxDim / w; w = maxDim; }
+          } else {
+            if (h > maxDim) { w *= maxDim / h; h = maxDim; }
+          }
+
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          currentTempImg = canvas.toDataURL('image/jpeg', 0.7);
+          document.getElementById('adminImgUrl').value = '';
+          previewImg(currentTempImg);
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProduct() {
+      const id = document.getElementById('adminProductId').value;
+      const name = document.getElementById('adminName').value.trim();
+      const cat = document.getElementById('adminCat').value;
+      const price = parseFloat(document.getElementById('adminPrice').value);
+      const stock = parseInt(document.getElementById('adminStock').value);
+      const desc = document.getElementById('adminDesc').value.trim();
+
+      if (!name || isNaN(price) || isNaN(stock)) {
+        alert("Lütfen Ürün Adı, Fiyat ve Stok alanlarını doldurunuz!");
+        return;
+      }
+
+      if (id) {
+        const prod = products.find(p => p.id == id);
+        if (prod) {
+          prod.name = name;
+          prod.cat = cat;
+          prod.price = price;
+          prod.stock = stock;
+          prod.desc = desc;
+          if (currentTempImg) prod.img = currentTempImg;
+        }
+      } else {
+        const newProd = {
+          id: Date.now(),
+          name, cat, price, stock, desc,
+          img: currentTempImg || "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=500&auto=format&fit=crop&q=80"
+        };
+        products.unshift(newProd);
+      }
+
+      saveToStorage();
+      renderMenu();
+      renderAdminTable();
+      resetAdminForm();
+      alert("Ürün başarıyla kaydedildi!");
+    }
+
+    function editProduct(id) {
+      const p = products.find(prod => prod.id == id);
+      if (!p) return;
+      document.getElementById('adminProductId').value = p.id;
+      document.getElementById('adminName').value = p.name;
+      document.getElementById('adminCat').value = p.cat;
+      document.getElementById('adminPrice').value = p.price;
+      document.getElementById('adminStock').value = p.stock;
+      document.getElementById('adminDesc').value = p.desc || '';
+      document.getElementById('adminImgUrl').value = (p.img && p.img.startsWith('data:')) ? '' : (p.img || '');
+      previewImg(p.img || '');
+      document.getElementById('formHeader').innerText = "✏️ Düzenle: " + p.name;
+    }
+
+    function deleteProduct(id) {
+      if (confirm("Bu ürünü silmek istediğinize emin misiniz?")) {
+        products = products.filter(p => p.id != id);
+        delete cart[id];
+        saveToStorage();
+        renderMenu();
+        updateCartUI();
+        renderAdminTable();
+      }
+    }
+
+    function resetAdminForm() {
+      document.getElementById('adminProductId').value = '';
+      document.getElementById('adminName').value = '';
+      document.getElementById('adminPrice').value = '';
+      document.getElementById('adminStock').value = '';
+      document.getElementById('adminDesc').value = '';
+      document.getElementById('adminImgUrl').value = '';
+      document.getElementById('adminImgFile').value = '';
+      currentTempImg = '';
+      previewImg('');
+      document.getElementById('formHeader').innerText = "+ Yeni Ürün Ekle";
+    }
+
+    function renderAdminTable() {
+      const search = (document.getElementById('adminSearch')?.value || '').toLowerCase();
+      const tbody = document.getElementById('adminTableBody');
+      tbody.innerHTML = '';
+      let count = 0;
+
+      products.forEach(p => {
+        if (p.name.toLowerCase().includes(search) || p.cat.toLowerCase().includes(search)) {
+          count++;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>
+              <img src="${p.img || 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=100&auto=format&fit=crop&q=80'}" class="admin-img-thumb">
+            </td>
+            <td><strong style="color:#fff;">${p.name}</strong></td>
+            <td>${p.cat.toUpperCase()}</td>
+            <td><span style="color:var(--gold); font-weight:700;">₺${Number(p.price).toFixed(2).replace('.', ',')}</span></td>
+            <td><strong>${p.stock}</strong> adet</td>
+            <td>
+              <button class="action-btn-sm edit-btn" onclick="editProduct(${p.id})">Düzenle</button>
+              <button class="action-btn-sm del-btn" onclick="deleteProduct(${p.id})">Sil</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+      document.getElementById('adminTotalCount').innerText = count;
+    }
+
+    renderMenu();
+    updateCartUI();
+  </script>
+
+</body>
+</html>
